@@ -5,14 +5,30 @@
      <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/static/favicon.ico">
-    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/static/error.css">
     <title>{{.Title}}</title>
 </head>
 
 <body>
-    <h1>{{.Code}}</h1>
-    <h1>{{.Message}}</h1>
-    <a href="/">Go back Home</a>
+    <div class="main-content">
+
+        <nav>
+            <a class="homenav" href="/">Home</a>
+            <ul>
+                <li><a href="#">Item 1</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="#">Item 3</a></li>
+            </ul>
+        </nav>
+
+        <h1>{{.Code}}</h1>
+        <h1>{{.Message}}</h1>
+        <a id="Home" href="/">Go back Home</a>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 All rights reserved.</p>
+    </footer>
 </body>
 
 </html>
