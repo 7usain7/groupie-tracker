@@ -43,3 +43,43 @@ var validQueries = map[string]bool{
 	"searchQuary": true,
 	// "page":        true, // (Not yet implemented)
 }
+
+var NotFound = struct {
+	Code    string
+	Title   string
+	Message string
+}{
+	Code:    "404",
+	Title:   "Page not found",
+	Message: "Sorry, this page was not found",
+}
+
+var BadRequest = struct {
+	Code    string
+	Title   string
+	Message string
+}{
+	Code:    "400",
+	Title:   "Bad Request",
+	Message: "Sorry, Bad request.",
+}
+
+var MethodNotAllowed = struct {
+	Code    string
+	Title   string
+	Message string
+}{
+	Code:    "405",
+	Title:   "Method Not Allowed",
+	Message: "Sorry, This method is not allowed.",
+}
+
+var InternalServerError = struct {
+	Code    string
+	Title   string
+	Message string
+}{
+	Code:    "500",
+	Title:   "Internal Error",
+	Message: "Zzz, Internal Server Error.",
+}

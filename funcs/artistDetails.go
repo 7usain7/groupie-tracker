@@ -13,7 +13,7 @@ func ArtistDetailHandler(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		RenderTemplate(w, "error.html", nil)
+		RenderTemplate(w, "error.html", BadRequest)
 		return
 	}
 
@@ -21,14 +21,16 @@ func ArtistDetailHandler(w http.ResponseWriter, r *http.Request) {
 	resp, err := http.Get(artistAPI)
 	if err != nil || resp.StatusCode != http.StatusOK {
 		w.WriteHeader(http.StatusNotFound)
-		RenderTemplate(w, "error.html", nil)
+		RenderTemplate(w, "error.html", NotFound)
 		return
 	}
 	defer resp.Body.Close()
 
 	var artist Artists
 	if err := json.NewDecoder(resp.Body).Decode(&artist); err != nil {
-		http.Error(w, "Failed to get artist relation data", http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError)
+		InternalServerError.Message = "Failed to get artist relation data"
+		RenderTemplate(w, "error.html", InternalServerError)
 		return
 	}
 
@@ -36,14 +38,16 @@ func ArtistDetailHandler(w http.ResponseWriter, r *http.Request) {
 	relResp, err := http.Get(artist.Relations)
 	if err != nil || relResp.StatusCode != http.StatusOK {
 		w.WriteHeader(http.StatusNotFound)
-		RenderTemplate(w, "error.html", nil)
+		RenderTemplate(w, "error.html", NotFound)
 		return
 	}
 	defer relResp.Body.Close()
 
 	var relData RelationsData
 	if err := json.NewDecoder(relResp.Body).Decode(&relData); err != nil {
-		http.Error(w, "Failed to get artist relation data", http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError)
+		InternalServerError.Message = "Failed to get artist relation data"
+		RenderTemplate(w, "error.html", InternalServerError)
 		return
 	}
 
@@ -57,6 +61,6 @@ func ArtistDetailHandler(w http.ResponseWriter, r *http.Request) {
 		RenderTemplate(w, "artistDetails.html", data)
 	} else {
 		w.WriteHeader(http.StatusNotFound)
-		RenderTemplate(w, "error.html", nil)
+		RenderTemplate(w, "error.html", NotFound)
 	}
 }

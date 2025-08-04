@@ -8,21 +8,26 @@ import (
 
 func ArtistSearchHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
-		http.NotFound(w, r)
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		RenderTemplate(w, "error.html", MethodNotAllowed)
 		return
 	}
 
 	// Fetch all artists
 	resp, err := http.Get("https://groupietrackers.herokuapp.com/api/artists")
 	if err != nil {
-		http.Error(w, "Failed to fetch artists", http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError)
+		InternalServerError.Message = "Failed to fetch artists."
+		RenderTemplate(w, "error.html", InternalServerError)
 		return
 	}
 	defer resp.Body.Close()
 
 	var artists []Artists
 	if err := json.NewDecoder(resp.Body).Decode(&artists); err != nil {
-		http.Error(w, "Failed to parse artist data", http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError)
+		InternalServerError.Message = "Failed to parse artist data."
+		RenderTemplate(w, "error.html", InternalServerError)
 		return
 	}
 
@@ -30,14 +35,16 @@ func ArtistSearchHandler(w http.ResponseWriter, r *http.Request) {
 	locResp, err := http.Get("https://groupietrackers.herokuapp.com/api/locations")
 	if err != nil || locResp.StatusCode != http.StatusOK {
 		w.WriteHeader(http.StatusNotFound)
-		RenderTemplate(w, "error.html", nil)
+		RenderTemplate(w, "error.html", NotFound)
 		return
 	}
 	defer locResp.Body.Close()
 
 	var location Locations
 	if err := json.NewDecoder(locResp.Body).Decode(&location); err != nil {
-		http.Error(w, "Failed to fetch Locations", http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError)
+		InternalServerError.Message = "Failed to fetch Locations."
+		RenderTemplate(w, "error.html", InternalServerError)
 		return
 	}
 
@@ -53,7 +60,7 @@ func ArtistSearchHandler(w http.ResponseWriter, r *http.Request) {
 
 	// When nothing match user quary search
 	if len(filtered) == 0 {
-		w.WriteHeader(http.StatusNotFound)
+		w.WriteHeader(http.StatusNotFound) // Look at later
 	}
 
 	// Remove unwanted objects
@@ -70,7 +77,7 @@ func HandleQueries(w http.ResponseWriter, r *http.Request) {
 		ArtistSearchHandler(w, r) //  Valid query
 		return
 	} else if ok && len(query) > 0 && strings.TrimSpace(query[0]) == "" {
-		w.WriteHeader(http.StatusBadRequest) // searchQuary is present but empty
+		w.WriteHeader(http.StatusBadRequest) // searchQuary is present but empty || "Will look at later"
 		Handler(w, r)
 		return
 	}
