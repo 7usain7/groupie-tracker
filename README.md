@@ -8,21 +8,14 @@ music artists, including their members, creation dates, first album, concert loc
 - Browse a full list of artists and bands  
 - View artist details (name, members,first album, creation date, etc.)  
 - Query to search artists by name, member, creation year, first album, or location
-- Search query auto complete 
 - Error handling and custom error pages
-- Click on a concert location to see its coordinates using OpenStreetMap 
-- Pagination to display a limited number of results per page (In Development)
-- Location pin redirects to Google Maps with accurate coordinates (In Development)
-- Custom elemnts Filters (In Development)
-- Unit Testing (In Development)
+
 
 ## Technologies Used:
 
 - **Go (Golang)** — Backend logic, API calls, and HTTP server  
 - **HTML/CSS** — Frontend rendering and styling  
 - **Docker** — For containerizing the app  
-- **Standard Go templating** — For dynamic HTML rendering   
-- **OpenStreetMap API** — For converting city names to coordinates
 
 ## How to Run:
 
@@ -40,11 +33,6 @@ music artists, including their members, creation dates, first album, concert loc
 
 3.  open the browser at: http://localhost:8080
 
-## Coming Fetures:
-
-1. OpenStreetMap API locations accuracy & general enhancments
-2. Additional element filter options
-3. Unit Testing
 
 ## Team Members:
 
