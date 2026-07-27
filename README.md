@@ -36,5 +36,5 @@ music artists, including their members, creation dates, first album, concert loc
 
 ## Team Members:
 
-- Ali Hussain #alimadan
-- Hussain Abdulrasool #habdulras
+- Ali Hussain #Ali-H-M
+- Hussain #7usain7
